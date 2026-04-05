@@ -2,22 +2,20 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
+    "noUnusedLocals": false,
     "types": [
-      "node"
+      "node",
+      "express",
+      "morgan",
+      "swagger-ui-express",
+      "cookie-parser"
     ],
-    "rootDir": "../../",
+    "rootDir": "src",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
   },
   "include": [
     "src/**/*.ts",
-    "../../packages/**/*.ts"
+    "src/**/*.d.ts"
   ],
-  "exclude": [
-    "out-tsc",
-    "dist",
-    "jest.config.ts",
-    "jest.config.cts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts"
-  ]
+  "exclude": []
 }

@@ -1,0 +1,12 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+}
+
+model user {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
