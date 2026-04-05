@@ -14,7 +14,7 @@ type RegistrationData = {
     country?: string;
 };
 
-export const validateregistrationdata = (data: RegistrationData, usertype: "user" | "seller") => {
+export const validateRegistrationData = (data: RegistrationData, usertype: "user" | "seller") => {
     const name = data.name?.trim();
     const email = data.email?.trim().toLowerCase();
     const password = data.password?.trim();

@@ -7,12 +7,12 @@ if( err instanceof AppError) {
 console.log( `Error: ${req.method} ${req.url} - ${err.message}`);
 
 return res.status(err.statusCode).json({ 
-    status: "errorr",
+    status: "error",
     message: err.message,
     ...(err.details && { details: err.details }),
 });
 }
-console.log("unhandeled error: ", err);
+console.log("unhandled error: ", err);
 return res.status(500).json({ 
     error: "something went wrong , please try again later",
 });

@@ -17,7 +17,7 @@ export class AppError extends Error {
 
 //Not found error
 export class NotFoundError extends AppError {
-    constructor(message = 'Resources  not found') {
+    constructor(message = 'Resources not found') {
         super(message, 404);
     }
 }
@@ -30,7 +30,7 @@ export class ValidationError extends AppError {
 
 // authentication error
 export class AuthError extends AppError {
-    constructor(message = "unauthorizes") {
+    constructor(message = "unauthorized") {
         super(message, 401);
     }
 }
