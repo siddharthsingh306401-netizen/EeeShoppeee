@@ -1,5 +1,7 @@
 const { NxAppWebpackPlugin } = require("@nx/webpack/app-plugin");
-const { join } = require("path");
+const { Extensions } = require("@prisma/client/runtime/library");
+const { join, resolve } = require("path");
+const { Extension } = require("typescript");
 
 module.exports = {
   output: {
@@ -9,17 +11,22 @@ module.exports = {
       devtoolModuleFilenameTemplate: "[absolute-resource-path]",
     }),
   },
+  resolve: {
+    alias: {
+      "@packages": resolve(__dirname, "../../packages"),
+    },
+    extensions: [".ts", ".js"],
+  },
   plugins: [
     new NxAppWebpackPlugin({
       target: "node",
       compiler: "tsc",
       main: "./src/main.ts",
       tsConfig: "./tsconfig.app.json",
-      assets: ["./src/assets"],
+
       optimization: false,
       outputHashing: "none",
       generatePackageJson: false,
-      sourceMap: true,
     }),
   ],
 };
