@@ -47,6 +47,7 @@
         ],
         "options": {
           "buildTarget": "@eshop/api-gateway:build",
+          "inspect": false,
           "runBuildTargetDependencies": false
         },
         "configurations": {

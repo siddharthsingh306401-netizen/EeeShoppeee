@@ -87,6 +87,7 @@
         ],
         "options": {
           "buildTarget": "@eshop/auth-service:build",
+          "inspect": false,
           "runBuildTargetDependencies": false
         },
         "configurations": {
