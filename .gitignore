@@ -48,3 +48,7 @@ test-output
 /generated/prisma
 
 .nx/polygraph
+
+# Next.js
+.next
+out

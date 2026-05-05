@@ -1,13 +1,17 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "./index";
 export const errorMiddleware = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  if (err instanceof AppError) {
-    console.log(`Error: ${req.method} ${req.url} - ${err.message}`);
+  const operationalStatusCode = (err as AppError & { statusCode?: number }).statusCode;
+  const operationalMessage = err.message || "Unexpected error";
+  const operationalDetails = (err as AppError & { details?: unknown }).details;
 
-    return res.status(err.statusCode).json({
+  if (err instanceof AppError || typeof operationalStatusCode === "number") {
+    console.log(`Error: ${req.method} ${req.url} - ${operationalMessage}`);
+
+    return res.status(operationalStatusCode || 500).json({
       status: "error",
-      message: err.message,
-      ...(err.details && { details: err.details }),
+      message: operationalMessage,
+      ...(operationalDetails && { details: operationalDetails }),
     });
   }
   console.log("unhandled error: ", err);

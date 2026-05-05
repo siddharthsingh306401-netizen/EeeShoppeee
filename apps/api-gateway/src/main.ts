@@ -1,7 +1,7 @@
 import express from "express";
 import * as path from "path";
 import cors from "cors";
-import { createProxyMiddleware } from "http-proxy-middleware";
+import { createProxyMiddleware, fixRequestBody } from "http-proxy-middleware";
 import morgan from "morgan";
 import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import swaggerUi from "swagger-ui-express";
@@ -37,7 +37,13 @@ app.get("/gateway-health", (req, res) => {
   res.send({ message: "Welcome to api-gateway!" });
 });
 
-app.use("/", createProxyMiddleware({ target: "http://localhost:6001" }));
+app.use(
+  "/",
+  createProxyMiddleware({
+    target: "http://localhost:6001",
+    onProxyReq: fixRequestBody,
+  }),
+);
 
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () => {

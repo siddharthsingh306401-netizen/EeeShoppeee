@@ -1,5 +1,3 @@
-import { version } from "node:os";
-import { title } from "node:process";
 import swaggerAutogen from "swagger-autogen";
 const doc = {
   info: {
@@ -9,6 +7,7 @@ const doc = {
   },
 
   host: "localhost:6001",
+  basePath: "/api",
   schemes: ["http"],
 };
 
