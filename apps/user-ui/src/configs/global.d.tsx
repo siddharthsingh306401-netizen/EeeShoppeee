@@ -1,4 +1,4 @@
-type NavItemsType = {   
+type NavItemsTypes = {
     title : string;
     href: string;
 };  

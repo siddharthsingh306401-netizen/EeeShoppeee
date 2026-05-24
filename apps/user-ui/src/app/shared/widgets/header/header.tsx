@@ -4,6 +4,7 @@ import React from "react";
 import ProfileIcon from "apps/user-ui/src/assets/svgs/profile-icon";
 import  HeartIcon  from "apps/user-ui/src/assets/svgs/heart-icon";
 import CartIcon from "apps/user-ui/src/assets/svgs/cart-icon";
+import HeaderBottom from "./header-bottom";
 
 const Header = () => {
   return (
@@ -26,33 +27,33 @@ const Header = () => {
     </button>
 
 </div>
-<div className=" flex item-centre gap-8">
- <div className="flex item-centre gap-2"> 
-     <link href = {"/login"} 
-     className="border-2 w-[50px] h-[50px] flex item-centre justify-centre rounded-full border-[#010f1c1a]"
+<div className=" flex items-center gap-8">
+ <div className="flex items-center gap-2"> 
+     <Link href = {"/login"} 
+     className="border-2 w-[50px] h-[50px] flex items-center justify-center rounded-full border-[#010f1c1a]"
      >
   <ProfileIcon/>
-  </link>
+  </Link>
 
 
- <link href={"/login"}>
+ <Link href={"/login"}>
   <span className="block font-medium text-gray-700">Hello,</span>
   <span className="font-semibold">sign in</span>
- </link>
+ </Link>
 </div>
 <div className="flex items-center gap-5"></div>
-<link href = {"/wishlist"} className="relative">
+<Link href = {"/wishlist"} className="relative">
 <HeartIcon />
-<div className="w-6 h-6 border-2 border-white bg-red-500 rounded-full flex items-centre justify-centre absolute top-[-10px] right-[-10px]  ">
+<div className="w-6 h-6 border-2 border-white bg-red-500 rounded-full flex items-center justify-center absolute top-[-10px] right-[-10px]  ">
   <span className=" text-white font-medium text-sm">0</span>
 </div>
-</link>
-<link href = {"/cart"} className="relative">
+</Link>
+<Link href = {"/cart"} className="relative">
 <CartIcon />
-<div className="w-6 h-6 border-2 border-white bg-red-500 rounded-full flex items-centre justify-centre absolute top-[-10px] right-[-10px]  ">
+<div className="w-6 h-6 border-2 border-white bg-red-500 rounded-full flex items-center justify-center absolute top-[-10px] right-[-10px]  ">
   <span className=" text-white font-medium text-sm">0</span>
 </div>
-</link>
+</Link>
 </div>
 
   </div>
