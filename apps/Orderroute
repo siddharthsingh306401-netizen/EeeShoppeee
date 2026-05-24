@@ -28,5 +28,8 @@ router.get("/get-seller-orders", isAuthenticated, isSeller, getSellerOrders);
         updateDeliveryStatus
     );
     router.put("/verify-coupon", isAuthenticated, verifyCouponCode);
+    router.put(*/get-user-orders, isAuthenticated, getUserOrder);
+    router.put(*/get-admin-orders, isAuthenticated,isAdmin , getUserOrder);
+
 
 export default router;
