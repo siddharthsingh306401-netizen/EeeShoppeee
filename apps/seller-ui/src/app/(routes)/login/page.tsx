@@ -1,44 +1,54 @@
-"use client";
-
-import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import GoogleIcon from "../../shared/components/google-buttons";
-import { Axios, AxiosError } from "axios";
+'use client';
+import React, { useState } from 'react'
+import {useform} from "react-hook-form";
+import { useMutation } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';    
 
 type FormData = {
-    email: string;
-    password: string;
+    email:string;
+    password:string;
 };
 
-const Login = () => {
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const [serverError, setServerError] = useState<string | null>(null);
-    const [rememberMe, setRememberMe] = useState(false);
+const Login =() =>{
+    const[passwordVisible, setPasswordVisible] = useState(false);
+    const[serverError,setServerError]= useState<string| null>(null);
+    const[rememberMe,setRemember]= useState(false);
+    const router = useRouter();
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const{
+        register,
+        handelSubmit,
+        formState:{errors},
+    } = useForm<FormData>()
     const loginMutation = useMutation({
-        mutationFn: async (data: FormData) => {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, data, {
-                withCredentials: true,
-            });
+        mutationFn: async(data:FormData)=>{
+            const response= await axios.post(
+                `${process.env.NEXT_PUBLIC_SERVER_URI}/api/login-user`,
+                data,
+                {withCredentials:true}
+            );
             return response.data;
+        
         },
-        onSuccess: (data) => {
+
+        onSuccess:(data)=>{
             setServerError(null);
             router.push("/");
         },
         onError: (error:AxiosError) => {
             const errorMessage= 
-            (error.response?.data as {message?:string})?.message || "Invalid credentials!";
+            (error.response?.data as {message?:string})?.message ||
+
+        "Invalid credentials!";
             setServerError(errorMessage);
         }, 
     });
     const onSubmit = (data: FormData) => {
         loginMutation.mutate(data);
     };
-  return (
+    return (
     <div className='w-full py-10 min-h-[85vh] bg-[#f1f1f1]'>
         <h1 className='text-4xl font-Poppins font-semibold text-black text-center'>
             Login

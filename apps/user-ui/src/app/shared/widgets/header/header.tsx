@@ -1,3 +1,4 @@
+'use client';
 import { Search } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -5,8 +6,11 @@ import ProfileIcon from "apps/user-ui/src/assets/svgs/profile-icon";
 import  HeartIcon  from "apps/user-ui/src/assets/svgs/heart-icon";
 import CartIcon from "apps/user-ui/src/assets/svgs/cart-icon";
 import HeaderBottom from "./header-bottom";
+import useUser from "apps/user-ui/src/hooks/useUsers";
 
 const Header = () => {
+const {user, isLoading}= useUser();
+
   return (
   <header className="w-full bg-white">
   <div className="mx-auto flex w-[80%] items-center justify-between gap-6 py-5">
@@ -29,17 +33,35 @@ const Header = () => {
 </div>
 <div className=" flex items-center gap-8">
  <div className="flex items-center gap-2"> 
-     <Link href = {"/login"} 
+    {!isLoading && user ? (
+      <>
+      <link href = {"/profile"}
+      className="border-2 w-[50px] h-[50px] flex items-center justify-centre rounded-full border-[#010f1c1a]"
+      >
+       <ProfileIcon/>
+  </Link>
+  <Link href={"/profile"}>
+  <span className="block font-medium text-gray-700">Hello,</span>
+  <span className="font-semibold">{user?.name?.split("")[0]}</span>
+      </link>
+      </>
+    ):( 
+    <>
+  
+    <Link href = {"/login"} 
      className="border-2 w-[50px] h-[50px] flex items-center justify-center rounded-full border-[#010f1c1a]"
      >
   <ProfileIcon/>
   </Link>
-
-
- <Link href={"/login"}>
+  <Link href={"/login"}>
   <span className="block font-medium text-gray-700">Hello,</span>
-  <span className="font-semibold">sign in</span>
+  <span className="font-semibold">{isLoading ? "Loading..." : "Sign In "}</span>
  </Link>
+ </>
+)}
+
+
+ 
 </div>
 <div className="flex items-center gap-5"></div>
 <Link href = {"/wishlist"} className="relative">

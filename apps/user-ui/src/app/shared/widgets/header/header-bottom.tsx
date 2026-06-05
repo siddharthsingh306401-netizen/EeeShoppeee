@@ -1,5 +1,6 @@
 'use client'
 import { navItems } from 'apps/user-ui/src/configs/constant';
+import useUser from 'apps/user-ui/src/hooks/useUsers';
 import { AlignLeft, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
@@ -7,10 +8,12 @@ import React, { useEffect, useState } from 'react'
 const HeaderBottom = () => {
     const [show, setShow] = useState(false);
     const [isSticky, setIsSticky] = useState(false);
+    const {user,isLoading}= useUser();
+   
 
     //track scroll position
     useEffect(() => {
-        const handleScroll = () => {
+        const handleScroll = () => { 
             if (window.scrollY > 100) {
                 setIsSticky(true);
             } else {
@@ -59,7 +62,24 @@ const HeaderBottom = () => {
 
         </div>
         <div>
-            {isSticky && <div />}
+            {isSticky && 
+            <div className='flex items-centre gap-8 pb-2'>
+                {!user ? (
+                    <Link href = {"/login"}
+                    className='border-2 w-[50px] h-[50px] flex items-center justify-center rounded-full border-[#010f1c1a]'
+                    >
+                    <ProfileIcon/>
+                    </Link>
+                ) : (
+                    <Link href = {"/profile"}
+                    className='border-2 w-[50px] h-[50px] flex items-center justify-centre rounded-full border-[#010f1c1a]'
+                    >
+                    <ProfileIcon/>
+                    </Link>
+                )}
+            </div>
+            }       
+            <div />
         </div>
         </div>
     </div>

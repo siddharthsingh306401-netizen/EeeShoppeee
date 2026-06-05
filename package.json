@@ -5,7 +5,8 @@
   "scripts": {
     "dev": " npx nx run-many --target=serve --all",
     "auth-docs": " node apps/auth-service/src/swagger.js",
-    "user-ui": "npx nx run @eshop/user-ui:dev"
+    "user-ui": "npx nx run @eshop/user-ui:dev",
+    "seller-ui": "npx nx run @eshop/seller-ui:dev"
   },
   "private": true,
   "dependencies": {
@@ -31,6 +32,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.76.1",
+    "react-hot-toast": "^2.6.0",
+    "stripe": "^22.2.0",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.1"
   },
