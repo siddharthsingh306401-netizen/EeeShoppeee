@@ -1,0 +1,63 @@
+export const getOrderDetails = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const orderId = req.params.id;
+
+    const order = await prisma.orders.findUnique({
+      where: {
+        id: orderId,
+      },
+      include: {
+        items: true,
+      },
+    });
+
+    if (!order) {
+       return next(new NotFoundError("Order not found with the id!"));
+    }
+
+    const shippingAddress = order.shippingAddressId ? await prisma.address.findUnique({
+      where: {
+        id: order?.shippingAddressId
+      },
+    }) : null;
+
+   const coupon = order.couponCode
+      ? await prisma?.discount_codes.findUnique({
+          where: {
+            discountCode: order.couponCode,
+          },
+        })
+      : null;
+
+   // fetch all products details in one go
+    const productIds = order.items.map((item: any) => item.productId);
+
+    const products = await prisma.products.findMany({
+      where: {
+        id: { in: productIds },
+      },
+      select: {
+        id: true,
+        title: true,
+        images: true,
+      },
+    });
+
+    // Create a map for quick product lookup
+    const productMap = new Map(products.map((p) => [p.id, p]));
+
+    res.status(200).json({
+      success: true,
+      order,
+      shippingAddress,
+      coupon,
+      products: Array.from(productMap.values()),
+    });
+  } catch (error) {
+    next(error);
+  }
+};

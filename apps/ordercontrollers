@@ -1,0 +1,41 @@
+// order.controller.ts
+
+// Get all orders for a specific seller
+export const getSellerOrders = async (req, res, next) => {
+  try {
+    // 1. Find the shop unique to the logged-in seller
+    const shop = await prisma.shops.findUnique({
+      where: {
+        sellerId: req.user.id, // ID from authenticated seller
+      },
+    });
+
+    // 2. Fetch all orders linked to that shop ID
+    const orders = await prisma.orders.findMany({
+      where: {
+        shopId: shop.id,
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatar: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc", // Show latest orders first
+      },
+    });
+
+    // 3. Send the orders array to the frontend
+    res.status(201).json({
+      success: true,
+      orders,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
